@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <header class="header">
-      <h1 class="header-title">用户列表</h1>
+      <h1 class="header-title">图片广场</h1>
       <div class="header-actions">
         <router-link to="/" class="btn btn-secondary">首页</router-link>
         <router-link to="/profile" class="btn btn-secondary">个人中心</router-link>
@@ -16,23 +16,24 @@
         {{ message }}
       </div>
 
-      <div v-if="loading && users.length === 0" class="loading">
+      <div v-if="loading && images.length === 0" class="loading">
         加载中...
       </div>
 
-      <div v-if="users.length === 0 && !loading" class="empty-state">
-        <p>暂无用户</p>
+      <div v-if="images.length === 0 && !loading" class="empty-state">
+        <p>暂无图片</p>
+        <p class="empty-hint">快去上传你的第一张图片吧</p>
       </div>
 
-      <div class="users-grid">
-        <div v-for="user in users" :key="user.id" class="user-card">
-          <div class="user-avatar">
-            <span class="avatar-text">{{ user.username?.charAt(0).toUpperCase() || 'U' }}</span>
+      <div class="images-grid">
+        <div v-for="image in images" :key="image.id" class="image-card">
+          <div class="image-wrapper">
+            <img :src="image.url" :alt="image.filename" class="image" />
           </div>
-          <div class="user-info">
-            <h3 class="user-name">{{ user.username }}</h3>
-            <p class="user-email">{{ user.email }}</p>
-            <p class="user-id">ID: {{ user.id }}</p>
+          <div class="image-info">
+            <p class="image-filename">{{ image.filename }}</p>
+            <p class="image-owner">上传者：{{ image.user?.username || image.username || '未知用户' }}</p>
+            <p class="image-date">{{ formatDate(image.createdAt) }}</p>
           </div>
         </div>
       </div>
@@ -44,31 +45,28 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { userService } from '@/services/userService'
+import { imageService } from '@/services/imageService'
 
 const router = useRouter()
 const authStore = useAuthStore()
 
-const users = ref([])
+const images = ref([])
 const loading = ref(false)
 const message = ref('')
 const messageType = ref('')
 
 onMounted(async () => {
   authStore.initAuth()
-  await loadUsers()
+  await loadImages()
 })
 
-const loadUsers = async () => {
+const loadImages = async () => {
   loading.value = true
-  const result = await userService.getAllUsers()
+  const result = await imageService.getAllUsersImages()
   loading.value = false
   
   if (result.success) {
-    users.value = result.data.users || result.data || []
-    if (users.value.length === 0) {
-      showMessage('暂无用户数据', 'info')
-    }
+    images.value = result.data.images || result.data || []
   } else {
     showMessage(result.message, 'error')
   }
@@ -77,6 +75,12 @@ const loadUsers = async () => {
 const handleLogout = () => {
   authStore.logout()
   router.push('/login')
+}
+
+const formatDate = (dateString) => {
+  if (!dateString) return ''
+  const date = new Date(dateString)
+  return date.toLocaleString('zh-CN')
 }
 
 const showMessage = (msg, type) => {
