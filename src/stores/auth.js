@@ -22,9 +22,9 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('user')
   }
 
-  async function login(username, password) {
+  async function login(email, password) {
     try {
-      const response = await api.post('/user/login', { username, password })
+      const response = await api.post('/user/login', { email, password })
       setAuth(response.data.token, response.data.user)
       return { success: true }
     } catch (error) {
