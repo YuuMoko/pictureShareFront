@@ -3,7 +3,8 @@
     <header class="header">
       <h1 class="header-title">个人中心</h1>
       <div class="header-actions">
-        <router-link to="/" class="btn btn-secondary">返回首页</router-link>
+        <router-link to="/" class="btn btn-secondary">首页</router-link>
+        <router-link to="/profile" class="btn btn-secondary">个人中心</router-link>
         <router-link to="/images" class="btn btn-secondary">我的图片</router-link>
         <button @click="handleLogout" class="btn btn-secondary">退出登录</button>
       </div>

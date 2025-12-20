@@ -3,9 +3,10 @@
     <header class="header">
       <h1 class="header-title">用户列表</h1>
       <div class="header-actions">
-        <span class="username">{{ authStore.user?.username || '用户' }}</span>
-        <router-link to="/profile" class="btn btn-profile">个人中心</router-link>
+        <router-link to="/" class="btn btn-secondary">首页</router-link>
+        <router-link to="/profile" class="btn btn-secondary">个人中心</router-link>
         <router-link to="/images" class="btn btn-secondary">我的图片</router-link>
+        <span class="username">{{ authStore.user?.username || '用户' }}</span>
         <button @click="handleLogout" class="btn btn-secondary">退出登录</button>
       </div>
     </header>
