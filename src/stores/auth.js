@@ -25,8 +25,15 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(email, password) {
     try {
       const response = await api.post('/user/login', { email, password })
-      setAuth(response.data.token, response.data.user)
-      return { success: true }
+      if (response.data.code == 0) {
+        setAuth(response.data.token, response.data);
+        return {success: true}
+      } else {
+        return {
+          success: false,
+          message: response.data.msg
+        }
+      }
     } catch (error) {
       return { 
         success: false, 
