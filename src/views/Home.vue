@@ -179,67 +179,67 @@ const showMessage = (msg, type) => {
   font-size: 16px;
 }
 
-.users-grid {
+/* 关键：首页图片网格布局，和 Images.vue 保持一致风格 */
+.images-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
 
-.user-card {
+.image-card {
   background: white;
   border-radius: 12px;
-  padding: 30px;
+  overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 
-.user-card:hover {
+.image-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.user-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.avatar-text {
-  color: white;
-  font-size: 32px;
-  font-weight: 600;
-}
-
-.user-info {
+.image-wrapper {
+  position: relative;
   width: 100%;
+  padding-top: 75%; /* 4:3 比例，和 Images.vue 一样 */
+  overflow: hidden;
+  background: #f5f5f5;
 }
 
-.user-name {
-  margin: 0 0 10px 0;
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-info {
+  padding: 15px;
+}
+
+.image-filename {
+  margin: 0 0 5px 0;
+  font-weight: 500;
   color: #333;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.user-email {
-  margin: 0 0 8px 0;
-  color: #666;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.user-id {
+.image-owner {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.image-date {
   margin: 0;
-  color: #999;
   font-size: 12px;
+  color: #999;
 }
 
 .btn {
@@ -252,16 +252,6 @@ const showMessage = (msg, type) => {
   transition: all 0.3s;
   text-decoration: none;
   display: inline-block;
-}
-
-.btn-profile {
-  background: #667eea;
-  color: white;
-}
-
-.btn-profile:hover {
-  background: #5568d3;
-  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -290,8 +280,8 @@ const showMessage = (msg, type) => {
     justify-content: center;
   }
 
-  .users-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  .images-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 16px;
   }
 }
