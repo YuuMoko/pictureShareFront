@@ -49,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (error) {
       return { 
         success: false, 
-        message: error.response?.data?.message || '登录失败，请检查用户名和密码' 
+        message: error.response?.data?.message || 'Login failed, please check your email and password' 
       }
     }
   }
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
     } catch (error) {
       return { 
         success: false, 
-        message: error.response?.data?.message || '注册失败，请重试' 
+        message: error.response?.data?.message || 'Sign up failed, please try again' 
       }
     }
   }

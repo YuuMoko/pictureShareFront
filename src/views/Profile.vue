@@ -1,18 +1,18 @@
 <template>
   <div class="profile-container">
     <header class="header">
-      <h1 class="header-title">个人中心</h1>
+      <h1 class="header-title">Profile</h1>
       <div class="header-actions">
-        <router-link to="/" class="btn btn-secondary">首页</router-link>
-        <router-link to="/profile" class="btn btn-secondary">个人中心</router-link>
-        <router-link to="/images" class="btn btn-secondary">我的图片</router-link>
-        <button @click="handleLogout" class="btn btn-secondary">退出登录</button>
+        <router-link to="/" class="btn btn-secondary">Home</router-link>
+        <router-link to="/profile" class="btn btn-secondary">Profile</router-link>
+        <router-link to="/images" class="btn btn-secondary">My Images</router-link>
+        <button @click="handleLogout" class="btn btn-secondary">Log out</button>
       </div>
     </header>
 
     <main class="main-content">
       <div class="profile-card">
-        <h2 class="card-title">修改个人信息</h2>
+        <h2 class="card-title">Update Profile</h2>
         
         <div v-if="message" :class="['message', messageType]">
           {{ message }}
@@ -20,44 +20,44 @@
 
         <form @submit.prevent="handleUpdate" class="form">
           <div class="form-group">
-            <label>用户名</label>
+            <label>Username</label>
             <input
               v-model="username"
               type="text"
-              placeholder="请输入新用户名"
+              placeholder="Enter new username"
               required
               class="input"
             />
           </div>
 
           <div class="form-group">
-            <label>当前密码</label>
+            <label>Current Password</label>
             <input
               v-model="currentPassword"
               type="password"
-              placeholder="请输入当前密码（修改密码时必填）"
+              placeholder="Enter current password (required to change password)"
               class="input"
             />
           </div>
 
           <div class="form-group">
-            <label>新密码</label>
+            <label>New Password</label>
             <input
               v-model="newPassword"
               type="password"
-              placeholder="请输入新密码（留空则不修改）"
+              placeholder="Enter new password (leave empty to keep current)"
               :minlength="newPassword ? 6 : 0"
               class="input"
             />
-            <small class="form-hint">留空则不修改密码，至少6位</small>
+            <small class="form-hint">Leave empty to keep current password; min 6 characters</small>
           </div>
 
           <div class="form-group">
-            <label>确认新密码</label>
+            <label>Confirm New Password</label>
             <input
               v-model="confirmPassword"
               type="password"
-              placeholder="请再次输入新密码"
+              placeholder="Re-enter new password"
               :minlength="confirmPassword ? 6 : 0"
               class="input"
             />
@@ -65,26 +65,26 @@
 
           <div class="form-actions">
             <button type="submit" :disabled="loading" class="btn btn-primary">
-              {{ loading ? '保存中...' : '保存修改' }}
+              {{ loading ? 'Saving...' : 'Save changes' }}
             </button>
             <button type="button" @click="handleReset" class="btn btn-secondary">
-              重置
+              Reset
             </button>
           </div>
         </form>
 
         <div class="user-info-section">
-          <h3 class="info-title">当前信息</h3>
+          <h3 class="info-title">Current Info</h3>
           <div class="info-item">
-            <span class="info-label">用户名：</span>
+            <span class="info-label">Username:</span>
             <span class="info-value">{{ authStore.user?.username || '-' }}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">邮箱：</span>
+            <span class="info-label">Email:</span>
             <span class="info-value">{{ authStore.user?.email || '-' }}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">用户ID：</span>
+            <span class="info-label">User ID:</span>
             <span class="info-value">{{ authStore.user?.id || '-' }}</span>
           </div>
         </div>
@@ -119,20 +119,20 @@ onMounted(() => {
 const handleUpdate = async () => {
   message.value = ''
   
-  // 验证新密码
+  // Validate new password fields
   if (newPassword.value) {
     if (newPassword.value.length < 6) {
-      showMessage('新密码长度至少为6位', 'error')
+      showMessage('New password must be at least 6 characters', 'error')
       return
     }
     
     if (newPassword.value !== confirmPassword.value) {
-      showMessage('两次输入的新密码不一致', 'error')
+      showMessage('New passwords do not match', 'error')
       return
     }
     
     if (!currentPassword.value) {
-      showMessage('修改密码需要输入当前密码', 'error')
+      showMessage('Current password is required to change password', 'error')
       return
     }
   }
@@ -159,7 +159,7 @@ const handleUpdate = async () => {
       if (result.data.user) {
         authStore.setAuth(authStore.token, result.data.user)
       }
-      showMessage('修改成功', 'success')
+      showMessage('Profile updated', 'success')
       // 清空密码相关字段
       currentPassword.value = ''
       newPassword.value = ''
@@ -169,7 +169,7 @@ const handleUpdate = async () => {
     }
   } catch (error) {
     loading.value = false
-    showMessage('修改失败，请重试', 'error')
+    showMessage('Update failed, please try again', 'error')
   }
 }
 

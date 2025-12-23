@@ -1,24 +1,24 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <h1 class="title">登录</h1>
+      <h1 class="title">Sign In</h1>
       <form @submit.prevent="handleLogin" class="form">
         <div class="form-group">
-          <label>邮箱</label>
+          <label>Email</label>
           <input
             v-model="email"
             type="email"
-            placeholder="请输入邮箱"
+            placeholder="Enter email"
             required
             class="input"
           />
         </div>
         <div class="form-group">
-          <label>密码</label>
+          <label>Password</label>
           <input
             v-model="password"
             type="password"
-            placeholder="请输入密码"
+            placeholder="Enter password"
             required
             class="input"
           />
@@ -27,11 +27,11 @@
           {{ errorMessage }}
         </div>
         <button type="submit" :disabled="loading" class="btn btn-primary">
-          {{ loading ? '登录中...' : '登录' }}
+          {{ loading ? 'Signing in...' : 'Sign In' }}
         </button>
         <div class="link-text">
-          还没有账号？
-          <router-link to="/register" class="link">立即注册</router-link>
+          Don’t have an account?
+          <router-link to="/register" class="link">Create one</router-link>
         </div>
       </form>
     </div>

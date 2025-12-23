@@ -1,7 +1,7 @@
 import api from '@/api'
 
 export const userService = {
-  // 获取所有用户
+  // Get all users
   async getAllUsers() {
     try {
       const response = await api.get('/user/all')
@@ -9,12 +9,12 @@ export const userService = {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || '获取用户列表失败'
+        message: error.response?.data?.message || 'Failed to load user list'
       }
     }
   },
 
-  // 更新用户信息（用户名、密码）
+  // Update user info (username/password)
   async updateUser(userId, updates) {
     try {
       const response = await api.put(`/user/${userId}`, updates)
@@ -22,12 +22,12 @@ export const userService = {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || '更新用户信息失败'
+        message: error.response?.data?.message || 'Failed to update user info'
       }
     }
   },
 
-  // 获取当前用户信息
+  // Get current user info
   async getCurrentUser() {
     try {
       const response = await api.get('/user/me')
@@ -35,7 +35,7 @@ export const userService = {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || '获取用户信息失败'
+        message: error.response?.data?.message || 'Failed to load user info'
       }
     }
   }

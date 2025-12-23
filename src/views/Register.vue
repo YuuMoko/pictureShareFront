@@ -1,45 +1,45 @@
 <template>
   <div class="register-container">
     <div class="register-card">
-      <h1 class="title">注册</h1>
+      <h1 class="title">Sign Up</h1>
       <form @submit.prevent="handleRegister" class="form">
         <div class="form-group">
-          <label>用户名</label>
+          <label>Username</label>
           <input
             v-model="username"
             type="text"
-            placeholder="请输入用户名"
+            placeholder="Enter username"
             required
             class="input"
           />
         </div>
         <div class="form-group">
-          <label>邮箱</label>
+          <label>Email</label>
           <input
             v-model="email"
             type="email"
-            placeholder="请输入邮箱"
+            placeholder="Enter email"
             required
             class="input"
           />
         </div>
         <div class="form-group">
-          <label>密码</label>
+          <label>Password</label>
           <input
             v-model="password"
             type="password"
-            placeholder="请输入密码（至少6位）"
+            placeholder="Enter password (min 6 chars)"
             required
             minlength="6"
             class="input"
           />
         </div>
         <div class="form-group">
-          <label>确认密码</label>
+          <label>Confirm Password</label>
           <input
             v-model="confirmPassword"
             type="password"
-            placeholder="请再次输入密码"
+            placeholder="Re-enter password"
             required
             class="input"
           />
@@ -48,11 +48,11 @@
           {{ errorMessage }}
         </div>
         <button type="submit" :disabled="loading" class="btn btn-primary">
-          {{ loading ? '注册中...' : '注册' }}
+          {{ loading ? 'Signing up...' : 'Sign Up' }}
         </button>
         <div class="link-text">
-          已有账号？
-          <router-link to="/login" class="link">立即登录</router-link>
+          Already have an account?
+          <router-link to="/login" class="link">Sign in</router-link>
         </div>
       </form>
     </div>
@@ -78,12 +78,12 @@ const handleRegister = async () => {
   errorMessage.value = ''
   
   if (password.value !== confirmPassword.value) {
-    errorMessage.value = '两次输入的密码不一致'
+    errorMessage.value = 'Passwords do not match'
     return
   }
   
   if (password.value.length < 6) {
-    errorMessage.value = '密码长度至少为6位'
+    errorMessage.value = 'Password must be at least 6 characters'
     return
   }
   

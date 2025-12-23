@@ -1,7 +1,7 @@
 import api from './api'
 
 export const imageService = {
-    // 获取所有图片
+    // Get current user's images
     async getImages() {
         try {
             const response = await api.get('/images')
@@ -9,12 +9,12 @@ export const imageService = {
         } catch (error) {
             return {
                 success: false,
-                message: error.response?.data?.message || '获取图片列表失败'
+                message: error.response?.data?.message || 'Failed to load images'
             }
         }
     },
 
-    // 上传图片
+    // Upload image
     async uploadImage(file) {
         try {
             const formData = new FormData()
@@ -35,12 +35,12 @@ export const imageService = {
         } catch (error) {
             return {
                 success: false,
-                message: error.response?.data?.message || '上传失败，请重试'
+                message: error.response?.data?.message || 'Upload failed, please try again'
             }
         }
     },
 
-    // 删除图片
+    // Delete image
     async deleteImage(imageId) {
         try {
             await api.delete(`/images/${imageId}`)
@@ -48,7 +48,7 @@ export const imageService = {
         } catch (error) {
             return {
                 success: false,
-                message: error.response?.data?.message || '删除失败，请重试'
+                message: error.response?.data?.message || 'Delete failed, please try again'
             }
         }
     },
@@ -63,7 +63,7 @@ export const imageService = {
         document.body.removeChild(link)
     },
 
-    // 获取所有用户的图片（用于feed展示）
+    // Get all users' images (for feed)
     async getAllUsersImages() {
         try {
             const response = await api.get('/images/all')
@@ -71,12 +71,12 @@ export const imageService = {
         } catch (error) {
             return {
                 success: false,
-                message: error.response?.data?.message || '获取图片列表失败'
+                message: error.response?.data?.message || 'Failed to load images'
             }
         }
     },
 
-    // 获取当前用户的图片
+    // Get current user's images
     async getMyImages() {
         try {
             const response = await api.get('/images/my')
@@ -84,7 +84,7 @@ export const imageService = {
         } catch (error) {
             return {
                 success: false,
-                message: error.response?.data?.message || '获取我的图片失败'
+                message: error.response?.data?.message || 'Failed to load your images'
             }
         }
     }

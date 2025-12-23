@@ -1,12 +1,12 @@
 <template>
   <div class="images-container">
     <header class="header">
-      <h1 class="header-title">图片分享平台</h1>
+      <h1 class="header-title">Image Sharing</h1>
       <div class="header-actions">
-        <router-link to="/" class="btn btn-secondary">首页</router-link>
-        <router-link to="/profile" class="btn btn-secondary">个人中心</router-link>
-        <span class="username">{{ authStore.user?.username || '用户' }}</span>
-        <button @click="handleLogout" class="btn btn-secondary">退出登录</button>
+        <router-link to="/" class="btn btn-secondary">Home</router-link>
+        <router-link to="/profile" class="btn btn-secondary">Profile</router-link>
+        <span class="username">{{ authStore.user?.username || 'User' }}</span>
+        <button @click="handleLogout" class="btn btn-secondary">Log out</button>
       </div>
     </header>
 
@@ -27,8 +27,8 @@
               <polyline points="17 8 12 3 7 8"></polyline>
               <line x1="12" y1="3" x2="12" y2="15"></line>
             </svg>
-            <p class="upload-text">点击或拖拽图片到此处上传</p>
-            <p class="upload-hint">支持多张图片同时上传</p>
+            <p class="upload-text">Click or drag images to upload</p>
+            <p class="upload-hint">Multi-image upload supported</p>
           </div>
         </div>
         <div v-if="uploadProgress > 0 && uploadProgress < 100" class="upload-progress">
@@ -44,12 +44,12 @@
       </div>
 
       <div v-if="loading && images.length === 0" class="loading">
-        加载中...
+        Loading...
       </div>
 
       <div v-if="images.length === 0 && !loading" class="empty-state">
-        <p>还没有上传任何图片</p>
-        <p class="empty-hint">上传你的第一张图片开始分享吧！</p>
+        <p>No images yet</p>
+        <p class="empty-hint">Upload your first photo to start sharing.</p>
       </div>
 
       <div class="images-grid">
@@ -57,14 +57,14 @@
           <div class="image-wrapper">
             <img :src="image.url" :alt="image.filename" class="image" />
             <div class="image-overlay">
-              <button @click="downloadImage(image)" class="icon-btn" title="下载">
+              <button @click="downloadImage(image)" class="icon-btn" title="Download">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                   <polyline points="7 10 12 15 17 10"></polyline>
                   <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
               </button>
-              <button @click="deleteImage(image.id)" class="icon-btn delete-btn" title="删除">
+              <button @click="deleteImage(image.id)" class="icon-btn delete-btn" title="Delete">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -149,9 +149,9 @@ const uploadFiles = async (files) => {
     
     if (result.success) {
       images.value.unshift(result.data.image)
-      showMessage(`成功上传 ${i + 1}/${files.length} 张图片`, 'success')
+      showMessage(`Uploaded ${i + 1}/${files.length}`, 'success')
     } else {
-      showMessage(`上传失败: ${result.message}`, 'error')
+      showMessage(`Upload failed: ${result.message}`, 'error')
     }
   }
   
@@ -162,13 +162,13 @@ const uploadFiles = async (files) => {
 }
 
 const deleteImage = async (imageId) => {
-  if (!confirm('确定要删除这张图片吗？')) return
+  if (!confirm('Delete this image?')) return
   
   const result = await imageService.deleteImage(imageId)
   
   if (result.success) {
     images.value = images.value.filter(img => img.id !== imageId)
-    showMessage('删除成功', 'success')
+    showMessage('Deleted successfully', 'success')
   } else {
     showMessage(result.message, 'error')
   }
@@ -176,7 +176,7 @@ const deleteImage = async (imageId) => {
 
 const downloadImage = (image) => {
   imageService.downloadImage(image.url, image.filename)
-  showMessage('开始下载', 'success')
+  showMessage('Downloading...', 'success')
 }
 
 const handleLogout = () => {
@@ -187,7 +187,7 @@ const handleLogout = () => {
 const formatDate = (dateString) => {
   if (!dateString) return ''
   const date = new Date(dateString)
-  return date.toLocaleString('zh-CN')
+  return date.toLocaleString('en-US')
 }
 
 const showMessage = (msg, type) => {

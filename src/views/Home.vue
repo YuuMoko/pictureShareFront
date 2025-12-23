@@ -1,13 +1,13 @@
 <template>
   <div class="home-container">
     <header class="header">
-      <h1 class="header-title">图片广场</h1>
+      <h1 class="header-title">Photo Plaza</h1>
       <div class="header-actions">
-        <router-link to="/" class="btn btn-secondary">首页</router-link>
-        <router-link to="/profile" class="btn btn-secondary">个人中心</router-link>
-        <router-link to="/images" class="btn btn-secondary">我的图片</router-link>
-        <span class="username">{{ authStore.user?.username || '用户' }}</span>
-        <button @click="handleLogout" class="btn btn-secondary">退出登录</button>
+        <router-link to="/" class="btn btn-secondary">Home</router-link>
+        <router-link to="/profile" class="btn btn-secondary">Profile</router-link>
+        <router-link to="/images" class="btn btn-secondary">My Images</router-link>
+        <span class="username">{{ authStore.user?.username || 'User' }}</span>
+        <button @click="handleLogout" class="btn btn-secondary">Log out</button>
       </div>
     </header>
 
@@ -17,12 +17,12 @@
       </div>
 
       <div v-if="loading && images.length === 0" class="loading">
-        加载中...
+        Loading...
       </div>
 
       <div v-if="images.length === 0 && !loading" class="empty-state">
-        <p>暂无图片</p>
-        <p class="empty-hint">快去上传你的第一张图片吧</p>
+        <p>No images yet</p>
+        <p class="empty-hint">Upload your first photo to start sharing.</p>
       </div>
 
       <div class="images-grid">
@@ -32,7 +32,7 @@
           </div>
           <div class="image-info">
             <p class="image-filename">{{ image.filename }}</p>
-            <p class="image-owner">上传者：{{ image.user?.username || image.username || '未知用户' }}</p>
+            <p class="image-owner">Uploaded by: {{ image.user?.username || image.username || 'Unknown user' }}</p>
             <p class="image-date">{{ formatDate(image.createdAt) }}</p>
           </div>
         </div>
@@ -80,7 +80,7 @@ const handleLogout = () => {
 const formatDate = (dateString) => {
   if (!dateString) return ''
   const date = new Date(dateString)
-  return date.toLocaleString('zh-CN')
+  return date.toLocaleString('en-US')
 }
 
 const showMessage = (msg, type) => {
