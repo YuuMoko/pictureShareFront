@@ -4,7 +4,19 @@ import api from '@/api'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || '')
-  const user = ref(JSON.parse(localStorage.getItem('user') || 'null'))
+  // 更健壮地从 localStorage 解析用户信息，避免 JSON.parse('undefined') 报错
+  let initialUser = null
+  const rawUser = localStorage.getItem('user')
+  if (rawUser) {
+    try {
+      initialUser = JSON.parse(rawUser)
+    } catch (e) {
+      initialUser = null
+      // 旧版本可能存过非法字符串，这里顺便清掉避免后续再报错
+      localStorage.removeItem('user')
+    }
+  }
+  const user = ref(initialUser)
 
   const isAuthenticated = computed(() => !!token.value)
 
